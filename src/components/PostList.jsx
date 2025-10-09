@@ -26,21 +26,23 @@ function PostList({ posts }) {
             {posts.map((p) => (
                 <Card key={p.id} className="mb-2">
                     <Card.Body>
-                        <div className="d-flex justify-content-between align-items-start">
+                        <div className="d-flex justify-between">
                             <div>
                                 <div className="fw-bold">{p.author}</div>
                                 <div>{p.text}</div>
-                                <small className="text-muted">{fmt(p.createdAt)}</small>
                             </div>
+                            <div className='space-x-2'>
+                                <small className="text-muted">{fmt(p.createdAt)}</small>
                             {p.uid === user?.uid && (
                                 <Button
-                                    variant="outline-danger"
-                                    size="sm"
-                                    onClick={() => removePost(p.id, p.uid)}
-                                >
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() => removePost(p.id, p.uid)}
+                                    >
                                     delete
                                 </Button>
                             )}
+                            </div>
                         </div>
                     </Card.Body>
                 </Card>

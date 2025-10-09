@@ -14,17 +14,46 @@ function Home() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [text, setText] = useState("");
     const [posts, setPosts] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const q = query(
-            collection(db, "posts"),
-            orderBy("createdAt", "desc"),
-            limit(50)
-        );
-        const unsub = onSnapshot(q, (snap) => {
-            setPosts(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-        });
-        return unsub;
+        console.log("Setting up Firestore listener");
+        try {
+            // Create the query
+            const postsRef = collection(db, "posts");
+            const q = query(
+                postsRef,
+                orderBy("createdAt", "desc"),
+                limit(50)
+            );
+
+            // Set up real-time listener
+            const unsub = onSnapshot(q, 
+                (snapshot) => {
+                    console.log("Received Firestore update:", snapshot.docs.length, "documents");
+                    const newPosts = [];
+                    snapshot.forEach((doc) => {
+                        newPosts.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    console.log("Posts data:", newPosts);
+                    setPosts(newPosts);
+                    setError(null);
+                },
+                (err) => {
+                    console.error("Firestore error:", err);
+                    setError("Error loading posts. Please try again later.");
+                }
+            );
+
+            // Cleanup subscription
+            return () => unsub();
+        } catch (err) {
+            console.error("Setup error:", err);
+            setError("Error setting up database connection.");
+        }
     }, []);
 
     return (
@@ -43,8 +72,18 @@ function Home() {
             <h2>Welcome to home</h2>
             <p>Hi, {user?.email ?? 'guest'}</p>
 
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
+
             <PostForm />
-            <PostList posts={posts} />
+            {posts.length > 0 ? (
+                <PostList posts={posts} />
+            ) : !error ? (
+                <p className="text-center mt-3">No posts yet. Be the first to post!</p>
+            ) : null}
         </div>
     );
 }

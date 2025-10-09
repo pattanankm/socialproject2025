@@ -13,6 +13,7 @@ function App() {
 
   return (
     <>
+HEAD
       <Routes>
       <Route path="/" element={<Profile />} />
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="home" element={<Home />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
     </>
   )
 }

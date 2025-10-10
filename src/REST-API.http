@@ -1,4 +1,5 @@
 GET http://localhost/socialproject2025/api/users.php
+Content-Type: application/json
 
 ###
 POST http://localhost/socialproject2025/api/users.php
@@ -9,6 +10,5 @@ PUT http://localhost/socialproject2025/api/users.php
 Content-Type: application/json
 
 ###
-
 DELETE http://localhost/socialproject2025/api/users.php
 Content-Type: application/json

@@ -1,10 +1,14 @@
 {
     "version": 2,
     "builds": [
-        { "src": "bin/www", "use": "@vercel/node" },
-        { "src": "public/**", "use": "@vercel/static" }
+        { "src": "public/**", "use": "@vercel/static" },
+        { "src": "API.php", "use": "@vercel/php" },
+        { "src": "index.html", "use": "@vercel/static" },
+        { "src": "assets/**/*", "use": "@vercel/static" }
     ], 
     "routes": [
-        { "src": "/(.*)", "dest": "bin/www" }
+        { "src": "/api/(.*)", "dest": "/API.php" },
+        { "src": "/(.*)", "dest": "/index.html" },
+        { "src": "/assets/(.*)", "dest": "/assets/$1" }
     ]
 }

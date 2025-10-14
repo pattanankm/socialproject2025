@@ -4,10 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// Importing the router (from routes)
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// Importing the test router (just for API testing)
+var testRouter = require('./routes/test');
+app.use('/test', testRouter);
+app.use('/user', testRouter);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

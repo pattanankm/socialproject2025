@@ -16,6 +16,7 @@ lerna-debug.log*
 public/
 
 #ignore jade pug files (using RESTFUL API)
+views/
 views/**/*.pug
 views/**/
 *.jade

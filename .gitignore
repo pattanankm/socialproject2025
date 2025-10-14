@@ -7,6 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+no need, polly already creayed
+API.php
+
+for testing code
+routes/test.php
+routes/test.js
+*routes/test.*
+
 node_modules
 dist
 dist-ssr

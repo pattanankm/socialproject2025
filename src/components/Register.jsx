@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Form, Alert, Button } from 'react-bootstrap'
 import { useUserAuth } from '../context/UserAuthContext'
+import { db } from '../firebase'
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -15,7 +17,21 @@ function Register() {
     e.preventDefault();
     setError('');
     try {
-      await signUp(email, password);
+      const result = await signUp(email, password);
+      
+      // Create user document in Firestore
+      if (result && result.user) {
+        await setDoc(doc(db, 'users', result.user.uid), {
+          email: email,
+          displayName: email.split('@')[0],
+          createdAt: serverTimestamp(),
+          followers: [],
+          following: [],
+          bio: '',
+          photoURL: `https://ui-avatars.com/api/?name=${email.split('@')[0]}&background=random`
+        });
+      }
+      
       navigate('/');
     } catch (err) {
       setError(err.message || 'Failed to sign up');

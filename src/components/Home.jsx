@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
 import { db } from "../firebase";
 import { collection, query, orderBy, onSnapshot, limit } from "firebase/firestore";
+import bobaIcon from '../assets/boba.png'; 
 
 // Import new components
 import Menu from './Menu';
@@ -63,10 +64,13 @@ function Home() {
 
     return (
         <div className="home-container content-with-bottom-nav">
-            {/* Instagram-style Header */}
-            <header className="home-header">
-                <h1 className="app-logo">SocialApp</h1>
-                <div className="header-actions">
+                     {/* Instagram-style Header */}
+                    <header className="home-header">
+                    <div className="app-logo-container">
+                    <img src={bobaIcon} alt="BOBA" className="app-icon" />
+                    <h1 className="app-logo">BOBA</h1>
+                    </div>
+                    <div className="header-actions">
                     <button 
                         className="header-btn" 
                         onClick={() => navigate('/notifications')}

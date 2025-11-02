@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useUserAuth } from '../context/UserAuthContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../firebase'
-import { doc, getDoc, collection, query, where, onSnapshot, getDocs, setDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, collection, query, where, onSnapshot, getDocs, setDoc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { FollowButton } from '../hooks/useFollow.jsx'
 import './Profile.css'
 import Landing from './Landing'
@@ -395,20 +395,6 @@ function Profile() {
         </div>
       </div>
 
-      {/* Story Highlights */}
-      <div className="story-highlights">
-        <div className="story-highlight">
-          <div className="story-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="16"></line>
-              <line x1="8" y1="12" x2="16" y2="12"></line>
-            </svg>
-          </div>
-          <div className="story-label">New</div>
-        </div>
-      </div>
-
       {/* Tabs */}
       <div className="profile-tabs">
         <button 
@@ -420,21 +406,6 @@ function Profile() {
             <rect x="14" y="3" width="7" height="7"></rect>
             <rect x="14" y="14" width="7" height="7"></rect>
             <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-        </button>
-        <button 
-          className={`tab ${activeTab === 'reels' ? 'active' : ''}`}
-          onClick={() => setActiveTab('reels')}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-            <line x1="7" y1="2" x2="7" y2="22"></line>
-            <line x1="17" y1="2" x2="17" y2="22"></line>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <line x1="2" y1="7" x2="7" y2="7"></line>
-            <line x1="2" y1="17" x2="7" y2="17"></line>
-            <line x1="17" y1="17" x2="22" y2="17"></line>
-            <line x1="17" y1="7" x2="22" y2="7"></line>
           </svg>
         </button>
         <button 
@@ -476,16 +447,6 @@ function Profile() {
               <p>When you share photos and videos, they will appear on your profile.</p>
             </div>
           )
-        )}
-        {activeTab === 'reels' && (
-          <div className="no-posts">
-            <div className="no-posts-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-            </div>
-            <h3>No Reels Yet</h3>
-          </div>
         )}
         {activeTab === 'tagged' && (
           <div className="no-posts">

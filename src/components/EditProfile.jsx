@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import './EditProfile.css';
 
 function EditProfile() {
     const { user } = useUserAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const [profilePhoto, setProfilePhoto] = useState(null);
     const [formData, setFormData] = useState({
         displayName: '',
         bio: '',
@@ -32,6 +34,8 @@ function EditProfile() {
                         website: data.website || '',
                         location: data.location || ''
                     });
+                    // Set the profile photo from Firestore
+                    setProfilePhoto(data.photoURL || null);
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
@@ -56,17 +60,49 @@ function EditProfile() {
         setLoading(true);
         try {
             const userRef = doc(db, 'users', user.uid);
+            const newDisplayName = formData.displayName.trim() || user.email?.split('@')[0] || 'User';
+            
+            // Update user profile
             await setDoc(userRef, {
-                displayName: formData.displayName.trim() || user.email?.split('@')[0] || 'User',
+                displayName: newDisplayName,
                 email: user.email,
                 bio: formData.bio.trim(),
                 website: formData.website.trim(),
                 location: formData.location.trim(),
-                photoURL: user.photoURL || null,
+                photoURL: profilePhoto || user.photoURL || null,
                 followers: [],
                 following: [],
                 createdAt: new Date()
             }, { merge: true });
+
+            // Update user data in all conversations where this user is a participant
+            try {
+                const conversationsRef = collection(db, 'conversations');
+                const q = query(
+                    conversationsRef,
+                    where('participants', 'array-contains', user.uid)
+                );
+                
+                const snapshot = await getDocs(q);
+                snapshot.forEach(async (convDoc) => {
+                    const convRef = doc(db, 'conversations', convDoc.id);
+                    const participantsData = convDoc.data().participantsData || {};
+                    
+                    // Update this user's data in the conversation
+                    participantsData[user.uid] = {
+                        displayName: newDisplayName,
+                        photoURL: profilePhoto || user.photoURL || null,
+                        email: user.email
+                    };
+                    
+                    await updateDoc(convRef, {
+                        participantsData: participantsData
+                    });
+                });
+            } catch (error) {
+                console.error('Error updating conversations:', error);
+                // Continue even if there's an error updating conversations
+            }
 
             alert('Profile updated successfully!');
             navigate('/');
@@ -80,6 +116,86 @@ function EditProfile() {
 
     const handleCancel = () => {
         navigate('/');
+    };
+
+    const handleProfileImageChange = async (e) => {
+        console.log('Profile image change handler called');
+        const file = e?.target?.files?.[0];
+        console.log('File selected:', file);
+        
+        if (!file) {
+            console.log('No file selected');
+            return;
+        }
+        
+        if (!user) {
+            console.log('User not logged in');
+            alert('You must be logged in to change your profile picture');
+            return;
+        }
+
+        try {
+            console.log('Starting upload process...');
+            setUploadingImage(true);
+
+            // Read the file and convert to base64
+            const reader = new FileReader();
+            
+            reader.onload = async (event) => {
+                try {
+                    console.log('File reading completed');
+                    const dataUrl = event.target?.result;
+                    console.log('Data URL created, length:', dataUrl?.length);
+                    
+                    if (!dataUrl) {
+                        throw new Error('Failed to read image data');
+                    }
+                    
+                    // Check if data URL is too large (Firestore has 1MB document size limit)
+                    if (dataUrl.length > 500000) {
+                        alert('Image is too large. Please select a smaller image.');
+                        setUploadingImage(false);
+                        return;
+                    }
+                    
+                    // Update user profile in Firestore with the data URL
+                    const userRef = doc(db, 'users', user.uid);
+                    console.log('Updating Firestore document for user:', user.uid);
+                    
+                    await updateDoc(userRef, {
+                        photoURL: dataUrl
+                    });
+
+                    console.log('Firestore updated successfully');
+
+                    // Update local state
+                    setProfilePhoto(dataUrl);
+
+                    console.log('Local state updated');
+                    alert('Profile picture updated successfully!');
+                    setUploadingImage(false);
+                } catch (error) {
+                    console.error('Error updating profile picture:', error);
+                    console.error('Error code:', error.code);
+                    console.error('Error details:', error.message);
+                    alert('Failed to update profile picture: ' + error.message);
+                    setUploadingImage(false);
+                }
+            };
+
+            reader.onerror = (error) => {
+                console.error('FileReader error:', error);
+                alert('Failed to read the image file.');
+                setUploadingImage(false);
+            };
+
+            console.log('Starting to read file as data URL...');
+            reader.readAsDataURL(file);
+        } catch (error) {
+            console.error('Error processing profile picture:', error);
+            alert('Failed to process profile picture: ' + error.message);
+            setUploadingImage(false);
+        }
     };
 
     if (!user) {
@@ -112,11 +228,39 @@ function EditProfile() {
                 {/* Profile Photo */}
                 <div className="profile-photo-section">
                     <img 
-                        src={user.photoURL || `https://ui-avatars.com/api/?name=${formData.displayName || 'User'}&background=random`}
+                        src={profilePhoto || user.photoURL || `https://ui-avatars.com/api/?name=${formData.displayName || 'User'}&background=random`}
                         alt="Profile"
                         className="profile-photo"
+                        style={{ opacity: uploadingImage ? 0.5 : 1, transition: 'opacity 0.2s' }}
                     />
-                    <button className="change-photo-btn">Change Photo</button>
+                    {uploadingImage && (
+                        <div style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            color: '#0095f6',
+                            fontSize: '14px',
+                            fontWeight: '600'
+                        }}>
+                            Uploading...
+                        </div>
+                    )}
+                    <label 
+                        htmlFor="profileImageInput"
+                        className="change-photo-btn"
+                        style={{ cursor: 'pointer' }}
+                    >
+                        Change Photo
+                    </label>
+                    <input
+                        id="profileImageInput"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleProfileImageChange}
+                        disabled={uploadingImage}
+                        style={{ display: 'none' }}
+                    />
                 </div>
 
                 {/* Form */}

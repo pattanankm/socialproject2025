@@ -66,6 +66,7 @@
     align-items: center;
     gap: 16px;
     border-bottom: 1px solid #dbdbdb;
+    position: relative;
 }
 
 .profile-photo {
@@ -73,6 +74,7 @@
     height: 96px;
     border-radius: 50%;
     object-fit: cover;
+    transition: opacity 0.2s ease;
 }
 
 .change-photo-btn {

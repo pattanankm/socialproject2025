@@ -1,0 +1,173 @@
+.notifications-container {
+    background-color: #fafafa;
+    min-height: 100vh;
+}
+
+.notifications-header {
+    background: white;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.notifications-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #262626;
+    margin: 0;
+}
+
+.notifications-content {
+    max-width: 614px;
+    margin: 0 auto;
+}
+
+.no-notifications {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    color: #8e8e8e;
+}
+
+.no-notifications p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.notifications-section {
+    background: white;
+    margin-bottom: 8px;
+    padding: 16px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #262626;
+    margin-bottom: 16px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    position: relative;
+}
+
+.notification-item.new::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: #0095f6;
+    border-radius: 50%;
+}
+
+.notification-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+}
+
+.notification-avatar:hover {
+    opacity: 0.7;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-text {
+    font-size: 14px;
+    color: #262626;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.notification-text strong {
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.notification-text strong:hover {
+    color: #8e8e8e;
+}
+
+.notification-time {
+    color: #8e8e8e;
+    margin-left: 4px;
+}
+
+.notification-post-image {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.notification-post-image:hover {
+    opacity: 0.8;
+}
+
+.follow-btn {
+    background: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.follow-btn:hover {
+    background: #00376b;
+}
+
+.follow-btn.following {
+    background: #efefef;
+    color: #262626;
+}
+
+.follow-btn.following:hover {
+    background: #dbdbdb;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .notifications-container {
+        background-color: #000;
+    }
+
+    .notifications-header,
+    .notifications-section {
+        background: #000;
+        border-color: #262626;
+    }
+
+    .notifications-header h2,
+    .section-title,
+    .notification-text {
+        color: #fff;
+    }
+
+    .follow-btn.following {
+        background: #262626;
+        color: #fff;
+    }
+
+    .follow-btn.following:hover {
+        background: #363636;
+    }
+}

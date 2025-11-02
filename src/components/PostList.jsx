@@ -34,27 +34,34 @@ function PostList({ posts }) {
                 <div>{p.text}</div>
                 <small className="text-muted">{fmt(p.createdAt)}</small>
 
-                {/* ✅ ปุ่มไลค์ */}
-                <div className="mt-2">
-                  <Like />
-                </div>
-              </div>
-
-              {p.uid === user?.uid && (
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  onClick={() => removePost(p.id, p.uid)}
-                >
-                  delete
-                </Button>
-              )}
-            </div>
-          </Card.Body>
-        </Card>
-      ))}
-    </>
-  );
+    return (
+        <>
+            {posts.map((p) => (
+                <Card key={p.id} className="mb-2">
+                    <Card.Body>
+                        <div className="d-flex justify-between">
+                            <div>
+                                <div className="fw-bold">{p.author}</div>
+                                <div>{p.text}</div>
+                            </div>
+                            <div className='space-x-2'>
+                                <small className="text-muted">{fmt(p.createdAt)}</small>
+                            {p.uid === user?.uid && (
+                                <Button
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() => removePost(p.id, p.uid)}
+                                    >
+                                    delete
+                                </Button>
+                            )}
+                            </div>
+                        </div>
+                    </Card.Body>
+                </Card>
+            ))}
+        </>
+    );
 }
 
 export default PostList;

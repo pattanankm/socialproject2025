@@ -1,0 +1,54 @@
+import React from 'react';
+import { Card, Button } from 'react-bootstrap';
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
+import { useUserAuth } from '../context/UserAuthContext';
+
+function PostList({ posts }) {
+    const { user } = useUserAuth();
+
+    async function removePost(id, ownerUid) {
+        if (!user || ownerUid !== user.uid) return;
+        await deleteDoc(doc(db, "posts", id));
+    }
+
+    const fmt = (ts) => {
+        try {
+            const d = ts?.toDate ? ts.toDate() : new Date();
+            return d.toLocaleString();
+        } catch {
+            return "";
+        }
+    };
+
+    return (
+        <>
+            {posts.map((p) => (
+                <Card key={p.id} className="mb-2">
+                    <Card.Body>
+                        <div className="d-flex justify-between">
+                            <div>
+                                <div className="fw-bold">{p.author}</div>
+                                <div>{p.text}</div>
+                            </div>
+                            <div className='space-x-2'>
+                                <small className="text-muted">{fmt(p.createdAt)}</small>
+                            {p.uid === user?.uid && (
+                                <Button
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() => removePost(p.id, p.uid)}
+                                    >
+                                    delete
+                                </Button>
+                            )}
+                            </div>
+                        </div>
+                    </Card.Body>
+                </Card>
+            ))}
+        </>
+    );
+}
+
+export default PostList;

@@ -1,0 +1,60 @@
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: white;
+    border-top: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    padding: 0 10px;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    color: #262626;
+}
+
+.nav-item:hover {
+    transform: scale(1.1);
+}
+
+.nav-item.active {
+    color: #0095f6;
+}
+
+.nav-item svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Add padding to bottom of content to prevent overlap with bottom nav */
+.content-with-bottom-nav {
+    padding-bottom: 60px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .bottom-nav {
+        background-color: #000;
+        border-top-color: #262626;
+    }
+    
+    .nav-item {
+        color: #fff;
+    }
+    
+    .nav-item.active {
+        color: #0095f6;
+    }
+}

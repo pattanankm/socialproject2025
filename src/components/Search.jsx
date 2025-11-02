@@ -14,14 +14,6 @@ function Search() {
     const navigate = useNavigate();
     const { user } = useUserAuth();
 
-    // Mock data for explore grid
-    const explorePosts = Array.from({ length: 30 }, (_, i) => ({
-        id: i + 1,
-        imageUrl: `https://picsum.photos/400/400?random=${i + 1}`,
-        likes: Math.floor(Math.random() * 10000),
-        comments: Math.floor(Math.random() * 500),
-    }));
-
     // Load recent users
     useEffect(() => {
         const loadRecentUsers = async () => {
@@ -209,33 +201,6 @@ function Search() {
                         </div>
                     )}
 
-                    {/* Explore Grid */}
-                    <div className="explore-section">
-                        <h3 className="explore-title">Explore</h3>
-                        <div className="explore-grid">
-                            {explorePosts.map(post => (
-                                <div key={post.id} className="explore-item">
-                                    <img src={post.imageUrl} alt="Post" />
-                                    <div className="explore-overlay">
-                                        <div className="explore-stats">
-                                            <span className="stat">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="2">
-                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                                </svg>
-                                                {post.likes.toLocaleString()}
-                                            </span>
-                                            <span className="stat">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="2">
-                                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                                                </svg>
-                                                {post.comments}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                 </>
             )}
         </div>

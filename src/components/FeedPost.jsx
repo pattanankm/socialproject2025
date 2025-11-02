@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getAllPosts, createPost, toggleLike, addComment } from '../API';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';

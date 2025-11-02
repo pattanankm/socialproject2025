@@ -24,36 +24,39 @@ function Chat() {
         scrollToBottom();
     }, [messages]);
 
-    // Load conversation and other user data
+    // Load conversation and other user data with real-time updates
     useEffect(() => {
-        const loadConversation = async () => {
-            if (!user || !conversationId) return;
+        if (!user || !conversationId) return;
 
-            try {
-                const convRef = doc(db, 'conversations', conversationId);
-                const convDoc = await getDoc(convRef);
+        let userUnsubscribe;
 
-                if (convDoc.exists()) {
-                    const convData = convDoc.data();
-                    const otherUserId = convData.participants.find(uid => uid !== user.uid);
+        const convRef = doc(db, 'conversations', conversationId);
+        
+        const unsubscribe = onSnapshot(convRef, (convDoc) => {
+            if (convDoc.exists()) {
+                const convData = convDoc.data();
+                const otherUserId = convData.participants.find(uid => uid !== user.uid);
+                
+                if (otherUserId) {
+                    const userRef = doc(db, 'users', otherUserId);
                     
-                    if (otherUserId) {
-                        const userRef = doc(db, 'users', otherUserId);
-                        const userDoc = await getDoc(userRef);
-                        
+                    // Use onSnapshot for real-time updates on user profile
+                    if (userUnsubscribe) userUnsubscribe();
+                    
+                    userUnsubscribe = onSnapshot(userRef, (userDoc) => {
                         if (userDoc.exists()) {
                             setOtherUser({ id: otherUserId, ...userDoc.data() });
                         }
-                    }
+                        setLoading(false);
+                    });
                 }
-                setLoading(false);
-            } catch (error) {
-                console.error('Error loading conversation:', error);
-                setLoading(false);
             }
-        };
+        });
 
-        loadConversation();
+        return () => {
+            unsubscribe();
+            if (userUnsubscribe) userUnsubscribe();
+        };
     }, [conversationId, user]);
 
     // Load messages

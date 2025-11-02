@@ -217,14 +217,7 @@ function Profile() {
   if (loading || !userProfile) {
     return (
       <div className="profile-container content-with-bottom-nav">
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column',
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          height: '100vh',
-          gap: '16px'
-        }}>
+        <div className="loading-spinner">
           <div style={{ 
             width: '48px', 
             height: '48px', 
@@ -233,8 +226,8 @@ function Profile() {
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }}></div>
-          <p style={{ color: '#8e8e8e', fontSize: '14px' }}>Loading profile...</p>
-          <p style={{ color: '#8e8e8e', fontSize: '12px' }}>UserId: {profileUserId}</p>
+          <p className="loading-text">Loading profile...</p>
+          <p className="loading-userId">UserId: {profileUserId}</p>
         </div>
         <style>{`
           @keyframes spin {
@@ -261,7 +254,7 @@ function Profile() {
           )}
           <h2>{userProfile.username}</h2>
           {isOwnProfile && (
-            <div className="menu-wrapper" style={{ position: 'relative' }}>
+            <div className="menu-wrapper">
               <button 
                 className="menu-btn" 
                 onClick={(e) => {
@@ -282,18 +275,7 @@ function Profile() {
               </button>
               <div 
                 className="dropdown-menu" 
-                style={{ 
-                  position: 'absolute',
-                  top: 'calc(100% + 8px)',
-                  right: '0',
-                  background: 'white',
-                  border: '1px solid #dbdbdb',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                  minWidth: '200px',
-                  zIndex: 10000,
-                  display: showMenu ? 'block' : 'none'
-                }}
+                style={{ display: showMenu ? 'block' : 'none' }}
                 onClick={(e) => {
                   console.log('Dropdown menu div clicked');
                   e.stopPropagation();

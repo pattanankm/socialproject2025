@@ -84,7 +84,7 @@ function EditProfile() {
                 );
                 
                 const snapshot = await getDocs(q);
-                snapshot.forEach(async (convDoc) => {
+                const updatePromises = snapshot.docs.map(async (convDoc) => {
                     const convRef = doc(db, 'conversations', convDoc.id);
                     const participantsData = convDoc.data().participantsData || {};
                     
@@ -95,10 +95,12 @@ function EditProfile() {
                         email: user.email
                     };
                     
-                    await updateDoc(convRef, {
+                    return updateDoc(convRef, {
                         participantsData: participantsData
                     });
                 });
+                
+                await Promise.all(updatePromises);
             } catch (error) {
                 console.error('Error updating conversations:', error);
                 // Continue even if there's an error updating conversations
@@ -230,26 +232,16 @@ function EditProfile() {
                     <img 
                         src={profilePhoto || user.photoURL || `https://ui-avatars.com/api/?name=${formData.displayName || 'User'}&background=random`}
                         alt="Profile"
-                        className="profile-photo"
-                        style={{ opacity: uploadingImage ? 0.5 : 1, transition: 'opacity 0.2s' }}
+                        className={`profile-photo ${uploadingImage ? 'uploading' : ''}`}
                     />
                     {uploadingImage && (
-                        <div style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            color: '#0095f6',
-                            fontSize: '14px',
-                            fontWeight: '600'
-                        }}>
+                        <div className="upload-status">
                             Uploading...
                         </div>
                     )}
                     <label 
                         htmlFor="profileImageInput"
                         className="change-photo-btn"
-                        style={{ cursor: 'pointer' }}
                     >
                         Change Photo
                     </label>
@@ -259,7 +251,7 @@ function EditProfile() {
                         accept="image/*"
                         onChange={handleProfileImageChange}
                         disabled={uploadingImage}
-                        style={{ display: 'none' }}
+                        className="profile-image-input"
                     />
                 </div>
 

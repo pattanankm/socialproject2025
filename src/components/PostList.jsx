@@ -4,7 +4,7 @@ import { Card, Button } from 'react-bootstrap';
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useUserAuth } from '../context/UserAuthContext';
-import Like from './Like'; // ✅ เพิ่มบรรทัดนี้
+
 
 function PostList({ posts }) {
   const { user } = useUserAuth();
@@ -23,17 +23,7 @@ function PostList({ posts }) {
     }
   };
 
-  return (
-    <>
-      {posts.map((p) => (
-        <Card key={p.id} className="mb-3">
-          <Card.Body>
-            <div className="d-flex justify-content-between align-items-start">
-              <div>
-                <div className="fw-bold">{p.author}</div>
-                <div>{p.text}</div>
-                <small className="text-muted">{fmt(p.createdAt)}</small>
-
+  
     return (
         <>
             {posts.map((p) => (

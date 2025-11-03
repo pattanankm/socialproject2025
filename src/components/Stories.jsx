@@ -18,22 +18,45 @@ function Stories() {
                 const userDoc = await getDoc(doc(db, 'users', user.uid));
                 const userData = userDoc.data();
                 
-                // Always add "Your Story" first
+                // Always add "You" first
                 const yourStory = {
                     id: 'your-story',
-                    username: 'Your Story',
+                    username: 'You',
                     displayName: userData?.displayName || 'You',
                     avatar: userData?.photoURL || `https://ui-avatars.com/api/?name=${userData?.displayName || 'You'}&background=random`,
                     isOwn: true,
-                    hasStory: false // Change to true when user has active story
+                    hasStory: false
                 };
 
                 // Get following list
                 const following = userData?.following || [];
 
-                // For now, just show "Your Story" since we don't have stories collection yet
-                // In the future, query stories from following users
-                setStories([yourStory]);
+                // Fetch following users data
+                let followingUsers = [];
+                if (following.length > 0) {
+                    const followingDocs = await Promise.all(
+                        following.map(userId => getDoc(doc(db, 'users', userId)))
+                    );
+                    
+                    followingUsers = followingDocs
+                        .map((doc, index) => {
+                            if (doc.exists()) {
+                                return {
+                                    id: following[index],
+                                    username: doc.data().displayName || doc.data().email?.split('@')[0] || 'User',
+                                    displayName: doc.data().displayName,
+                                    avatar: doc.data().photoURL || `https://ui-avatars.com/api/?name=${doc.data().displayName || 'User'}&background=random`,
+                                    isOwn: false,
+                                    hasStory: false
+                                };
+                            }
+                            return null;
+                        })
+                        .filter(user => user !== null);
+                }
+
+                // Combine: You first, then following users
+                setStories([yourStory, ...followingUsers]);
                 setLoading(false);
             } catch (error) {
                 console.error('Error loading stories:', error);
@@ -73,20 +96,12 @@ function Stories() {
                         className="story-item"
                         onClick={() => handleStoryClick(story)}
                     >
-                        <div className={`story-avatar-wrapper ${story.hasStory ? 'has-story' : ''}`}>
+                        <div className={`story-avatar-wrapper ${story.isOwn ? 'own-story' : ''}`}>
                             <img 
                                 src={story.avatar} 
                                 alt={story.username}
                                 className="story-avatar"
                             />
-                            {story.isOwn && !story.hasStory && (
-                                <div className="add-story-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="3">
-                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                    </svg>
-                                </div>
-                            )}
                         </div>
                         <span className="story-username">{story.username}</span>
                     </div>

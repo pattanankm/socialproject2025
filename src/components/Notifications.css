@@ -1,11 +1,11 @@
 .notifications-container {
-    background-color: #fafafa;
+    background-color: #e3f2fd;
     min-height: 100vh;
 }
 
 .notifications-header {
-    background: white;
-    border-bottom: 1px solid #dbdbdb;
+    background: #1976d2;
+    border-bottom: 1px solid #1565c0;
     padding: 16px;
     position: sticky;
     top: 0;
@@ -15,7 +15,7 @@
 .notifications-header h2 {
     font-size: 20px;
     font-weight: 600;
-    color: #262626;
+    color: white;
     margin: 0;
 }
 
@@ -65,7 +65,7 @@
     transform: translateY(-50%);
     width: 8px;
     height: 8px;
-    background: #0095f6;
+    background: #1976d2;
     border-radius: 50%;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .follow-btn {
-    background: #0095f6;
+    background: #1976d2;
     color: white;
     border: none;
     border-radius: 8px;
@@ -132,7 +132,7 @@
 }
 
 .follow-btn:hover {
-    background: #00376b;
+    background: #0d47a1;
 }
 
 .follow-btn.following {

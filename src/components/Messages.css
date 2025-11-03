@@ -1,5 +1,5 @@
 .messages-container {
-    background-color: #fff;
+    background-color: #e3f2fd;
     min-height: 100vh;
 }
 
@@ -8,10 +8,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #1565c0;
     position: sticky;
     top: 0;
-    background: white;
+    background: #1976d2;
     z-index: 100;
 }
 
@@ -21,6 +21,7 @@
     margin: 0;
     flex: 1;
     text-align: center;
+    color: white;
 }
 
 .back-btn,
@@ -29,7 +30,7 @@
     border: none;
     cursor: pointer;
     padding: 8px;
-    color: #262626;
+    color: white;
 }
 
 .conversations-list {

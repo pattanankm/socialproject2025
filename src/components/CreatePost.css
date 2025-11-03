@@ -1,13 +1,13 @@
 .create-post-container {
-    background-color: #fafafa;
+    background-color: #e3f2fd;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .create-post-header {
-    background: white;
-    border-bottom: 1px solid #dbdbdb;
+    background: #1976d2;
+    border-bottom: 1px solid #1565c0;
     padding: 12px 16px;
     display: flex;
     justify-content: space-between;
@@ -22,7 +22,7 @@
     border: none;
     cursor: pointer;
     padding: 8px;
-    color: #262626;
+    color: white;
     display: flex;
     align-items: center;
 }
@@ -30,7 +30,7 @@
 .header-title {
     font-size: 16px;
     font-weight: 600;
-    color: #262626;
+    color: white;
     margin: 0;
     flex: 1;
     text-align: center;
@@ -40,7 +40,7 @@
 .share-btn {
     background: none;
     border: none;
-    color: #0095f6;
+    color: #ffeb3b;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -49,11 +49,11 @@
 
 .next-btn:hover,
 .share-btn:hover {
-    color: #00376b;
+    color: #fdd835;
 }
 
 .share-btn:disabled {
-    color: #0095f680;
+    color: #ffeb3b80;
     cursor: not-allowed;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .select-btn {
-    background: #0095f6;
+    background: #1976d2;
     color: white;
     border: none;
     border-radius: 8px;
@@ -96,13 +96,13 @@
 }
 
 .select-btn:hover {
-    background: #00376b;
+    background: #0d47a1;
 }
 
 .text-only-btn {
     background: transparent;
-    color: #0095f6;
-    border: 1px solid #dbdbdb;
+    color: #1976d2;
+    border: 1px solid #1565c0;
     border-radius: 8px;
     padding: 8px 16px;
     font-size: 14px;
@@ -113,8 +113,8 @@
 }
 
 .text-only-btn:hover {
-    background: #fafafa;
-    border-color: #0095f6;
+    background: #e3f2fd;
+    border-color: #1976d2;
 }
 
 /* Step 2: Edit Image */
@@ -203,7 +203,7 @@
 }
 
 .post-options {
-    border-top: 1px solid #efefef;
+    border-top: 1px solid #e0e0e0;
     padding-top: 16px;
 }
 
@@ -213,7 +213,7 @@
     align-items: center;
     padding: 12px 0;
     cursor: pointer;
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .option-item span {

@@ -4,6 +4,7 @@ import { Form, Alert, Button } from 'react-bootstrap'
 import { useUserAuth } from '../context/UserAuthContext'
 import { db } from '../firebase'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+import './Register.css'
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -39,10 +40,9 @@ function Register() {
   };
 
   return (
-    <div>
-        <div className="row">
-            <div className="col-md-6 mx-auto">
-            <h2 className='mb-3'>Register</h2>
+    <div className="register-container">
+        <div className="register-box">
+            <h2>BOBA Sign Up</h2>
             {error && <Alert variant='danger'>{error}</Alert>}
 
             <Form onSubmit={handleSubmit}>
@@ -75,7 +75,6 @@ function Register() {
                 Already have an account? <Link to="/login">Log in</Link>
               </div>
             </div>
-        </div>
     </div>
   );
 }

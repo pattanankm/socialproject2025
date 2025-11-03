@@ -5,21 +5,22 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: #1976d2;
     border: none;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
     z-index: 999;
     transition: all 0.3s ease;
 }
 
 .floating-add-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    background: #0d47a1;
+    box-shadow: 0 6px 16px rgba(13, 71, 161, 0.4);
 }
 
 .floating-add-btn:active {

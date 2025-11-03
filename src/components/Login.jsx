@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Form, Alert, Button } from 'react-bootstrap'
 import { useUserAuth } from '../context/UserAuthContext'
+import './Login.css'
 
 
 function Login() {
@@ -25,10 +26,9 @@ function Login() {
   };
   
   return (
-    <div>
-      <div className="row">
-          <div className="col-md-6 mx-auto">
-          <h2 className='mb-3'>Login</h2>
+    <div className="login-container">
+      <div className="login-box">
+          <h2>BOBA Login</h2>
           {error && <Alert variant='danger'>{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='formBasicEmail'>
@@ -57,7 +57,6 @@ function Login() {
               Don't have an account? <Link to="/register">Sign up</Link>
             </div>
           </div>
-        </div>
     </div>
   )
 }

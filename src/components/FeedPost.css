@@ -1,6 +1,6 @@
 .feed-post {
     background: white;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #1565c0;
     margin-bottom: 24px;
     max-width: 614px;
     width: 100%;
@@ -63,7 +63,7 @@
     top: 100%;
     right: 0;
     background: white;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #1565c0;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 1000;
@@ -112,7 +112,7 @@
     width: 100%;
     min-height: 100px;
     padding: 12px;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #1565c0;
     border-radius: 4px;
     font-size: 14px;
     font-family: inherit;
@@ -138,12 +138,12 @@
 }
 
 .btn-save {
-    background: #0095f6;
+    background: #1976d2;
     color: white;
 }
 
 .btn-save:hover {
-    background: #0077cc;
+    background: #0d47a1;
 }
 
 .btn-cancel {
@@ -295,7 +295,7 @@
 }
 
 .comment-form {
-    border-top: 1px solid #efefef;
+    border-top: 1px solid #e0e0e0;
     padding: 6px 16px;
     display: flex;
     align-items: center;
@@ -318,7 +318,7 @@
 .post-comment-btn {
     background: none;
     border: none;
-    color: #0095f6;
+    color: #1976d2;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -326,7 +326,7 @@
 }
 
 .post-comment-btn:hover {
-    color: #00376b;
+    color: #0d47a1;
 }
 
 /* Dark mode */

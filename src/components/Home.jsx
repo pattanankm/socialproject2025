@@ -5,6 +5,7 @@ import { useUserAuth } from '../context/UserAuthContext';
 import { db } from "../firebase";
 import { collection, query, orderBy, onSnapshot, limit } from "firebase/firestore";
 
+
 // Import new components
 import Menu from './Menu';
 import PostForm from './PostForm';
@@ -65,7 +66,7 @@ function Home() {
         <div className="home-container content-with-bottom-nav">
             {/* Instagram-style Header */}
             <header className="home-header">
-                <h1 className="app-logo">SocialApp</h1>
+                <h1 className="app-logo">BOBA</h1>
                 <div className="header-actions">
                     <button 
                         className="header-btn" 

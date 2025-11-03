@@ -1,6 +1,6 @@
 .stories-container {
     background: white;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #1565c0;
     padding: 16px 0;
     margin-bottom: 24px;
     overflow: hidden;
@@ -34,15 +34,11 @@
     position: relative;
     padding: 2px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: #1565c0;
 }
 
-.story-avatar-wrapper.has-story {
+.story-avatar-wrapper.own-story {
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-
-.story-avatar-wrapper:not(.has-story) {
-    background: #dbdbdb;
 }
 
 .story-avatar {
@@ -60,7 +56,7 @@
     right: 0;
     width: 20px;
     height: 20px;
-    background: #0095f6;
+    background: #1976d2;
     border: 2px solid white;
     border-radius: 50%;
     display: flex;

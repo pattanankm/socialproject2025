@@ -3,7 +3,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    height: 56px;
     background-color: #1976d2;
     border-top: 1px solid #1565c0;
     display: flex;
@@ -23,6 +23,8 @@
     justify-content: center;
     transition: transform 0.2s ease;
     color: white;
+    flex: 1;
+    height: 100%;
 }
 
 .nav-item:hover {
@@ -37,11 +39,6 @@
 .nav-item svg {
     width: 24px;
     height: 24px;
-}
-
-/* Add padding to bottom of content to prevent overlap with bottom nav */
-.content-with-bottom-nav {
-    padding-bottom: 60px;
 }
 
 /* Dark mode support */

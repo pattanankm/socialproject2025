@@ -1,11 +1,12 @@
 /* Login Page */
 .login-container {
     background-color: #e3f2fd;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    overflow: hidden;
 }
 
 .login-box {

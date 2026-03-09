@@ -2,7 +2,10 @@
   max-width: 935px;
   margin: 0 auto;
   background-color: #e3f2fd;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .profile-header {

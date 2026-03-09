@@ -1,8 +1,9 @@
 .create-post-container {
     background-color: #e3f2fd;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .create-post-header {
